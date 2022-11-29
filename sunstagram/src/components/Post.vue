@@ -1,26 +1,48 @@
 <template>
   <div class="post">
     <div class="post-header">
-      <div class="profile"></div>
-      <span class="profile-name">ChanKim</span>
+      <div
+        class="profile"
+        :style="{ backgroundImage: `url(${userImage})` }"
+      ></div>
+      <span class="profile-name">{{ $store.state.postData[index].name }}</span>
     </div>
-    <div class="post-body"></div>
+    <div
+      class="post-body"
+      :class="`${$store.state.postData[index].filter}`"
+      :style="{ backgroundImage: `url(${postImage})` }"
+    ></div>
     <div class="post-content">
-      <p>43 Likes</p>
-      <p><strong>글쓴이아이디</strong> 임시내용</p>
-      <p class="date">May 15</p>
+      <p>{{ $store.state.postData[index].likes }}</p>
+      <p>
+        <strong>{{ $store.state.postData[index].name }}</strong>
+        {{ $store.state.postData[index].content }}
+      </p>
+      <p class="date">{{ $store.state.postData[index].date }}</p>
     </div>
   </div>
+  <hr style="border: solid 1px whitesmoke" />
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    index: Number,
+  },
+  data() {
+    return {
+      userImage: this.$store.state.postData[this.index].userImage,
+      postImage: this.$store.state.postData[this.index].postImage,
+    };
+  },
+};
 </script>
 
 <style>
 .post {
   width: 100%;
 }
+
 .profile {
   background-image: url("https://placeimg.com/100/100/arch");
   width: 30px;
@@ -29,6 +51,7 @@ export default {};
   border-radius: 50%;
   float: left;
 }
+
 .profile-name {
   display: block;
   float: left;
@@ -36,21 +59,25 @@ export default {};
   padding-top: 7px;
   font-size: 14px;
 }
+
 .post-header {
   height: 30px;
   padding: 10px;
 }
+
 .post-body {
   background-image: url("https://placeimg.com/640/480/animals");
   height: 450px;
   background-position: center;
   background-size: cover;
 }
+
 .post-content {
   padding-left: 15px;
   padding-right: 15px;
   font-size: 14px;
 }
+
 .date {
   font-size: 11px;
   color: grey;
